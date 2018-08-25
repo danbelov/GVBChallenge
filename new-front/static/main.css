@@ -32,3 +32,13 @@ aside{
 
 .imagescontainer{
 }
+
+/* Submit freport*/
+
+.container{
+    width: 500px;
+    height: 500px;
+    border-style: solid;
+    border-color: rgb(221, 221, 221);
+    border-width: 0.55px;
+}

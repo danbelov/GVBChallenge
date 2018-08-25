@@ -1,7 +1,12 @@
-function hideAndShowNext(previousId, nextId){
+$(document).ready(function(){
+    //$(".container").hide();
+    $('.container-first').show();
+});
+
+function next(nextId){
     console.log('TEST');
     $(document).ready(function(){
-        $(previousId).hide();
+        //$(".container").hide();
         $(nextId).show();
     });
 }
