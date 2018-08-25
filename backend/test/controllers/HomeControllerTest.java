@@ -17,6 +17,8 @@ import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.*;
 import static play.test.Helpers.route;
 
+import models.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -104,6 +106,18 @@ public class HomeControllerTest extends WithApplication {
         JsonNode jnode = Json.parse(((play.http.HttpEntity.Strict)result.body()).data().utf8String());
         System.out.println(((play.http.HttpEntity.Strict)result.body()).data().utf8String());
         assertEquals("20.0", jnode.findPath("fraudScore").toString());
+    }
+
+    @Test
+    public void testChangeStatus() {
+        testCreateReport();
+        Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/ChangeStatus/1")
+                .bodyJson(Json.parse("{\"status\" : \"Test\"}"));
+        Result result = route(app, request);
+        assertEquals(OK, result.status());
+        assertEquals("Test", DamageReport.find.byId(Long.parseLong("1")).status);
     }
 
     @Test

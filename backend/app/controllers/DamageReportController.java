@@ -37,11 +37,17 @@ public class DamageReportController extends Controller {
     }
 
     public Result changeStatus(Long id) {
+        System.out.println("Changing status of " + id);
         EbeanServer server = Ebean.getDefaultServer();
         DynamicForm form = formFactory.form().bindFromRequest();
+        Object[] keys = form.rawData().keySet().toArray();
+        for(int i=0;i<keys.length;i++) {
+            System.out.println("Got field: " + ((String)keys[i]) + " with value " + form.get(((String)keys[i])));
+        }
         DamageReport rep = DamageReport.find.byId(id);
         rep.status = form.get("status");
         server.save(rep);
+        System.out.println("Status changed to " + form.get("status"));
         return ok();
     }
 
