@@ -6,4 +6,9 @@
 GET     /                           controllers.HomeController.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+#GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+POST    /DamageReport               controllers.DamageReportController.createDamageReport()
+GET     /DamageReport/:id           controllers.DamageReportController.getDamageReport(id: Long)
+
+POST    /email                       controllers.MailGrabber.newMail()
