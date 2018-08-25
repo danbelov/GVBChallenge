@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.joda.time.DateTime;
 
 import java.util.*;
@@ -19,6 +20,7 @@ public class Event extends Model {
     public Long id;
 
     @ManyToOne
+    @JsonBackReference
     public DamageReport damageReport;
 
     public Long time;

@@ -42,11 +42,11 @@ public class DamageReport extends Model {
     public Boolean billExists;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "damageReport")
-    @JsonBackReference
-    public List<DBImage> images;
+    //@JsonBackReference
+    public List<DBImage> images = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "damageReport")
-    @JsonBackReference
+    //@JsonBackReference
     public List<Event> events = new ArrayList<>();
 
     public static final Finder<Long, DamageReport> find = new Finder<>(DamageReport.class);

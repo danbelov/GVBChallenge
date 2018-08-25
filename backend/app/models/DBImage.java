@@ -3,6 +3,7 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
@@ -15,6 +16,7 @@ public class DBImage extends Model {
     public Long id;
 
     @ManyToOne
+    @JsonBackReference
     public DamageReport damageReport;
 
     public String description;

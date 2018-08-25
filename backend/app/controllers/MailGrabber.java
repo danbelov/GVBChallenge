@@ -24,14 +24,11 @@ import java.util.List;
 
 public class MailGrabber extends Controller {
 
-    static final Logger LOG = LoggerFactory.getLogger(MailGrabber.class);
-
     private final FormFactory formFactory;
 
-    private static final String ServerAddress = "http://142.93.107.12:9000/";
+    private static final String ServerAddress = "http://142.93.107.12/";
 
     private static final String PHPIntermediaryPage = "submit-report.php";
-
 
     @Inject
     public MailGrabber(FormFactory formFactory) {
@@ -72,7 +69,7 @@ public class MailGrabber extends Controller {
                             "folgenden Link finden: " + ServerAddress
                                                       + PHPIntermediaryPage
                                                       + "?id=" + report.id
-                                                      + "?email=" + report.email);
+                                                      + "&email=" + report.email);
 
             System.out.println("E-Mail from " + report.email + " received, id: " + report.id + ", msg: " + report.events.get(0).text);
             return ok("E-Mail from " + report.email + " received, id: " + report.id + ", msg: " + report.events.get(0).text);

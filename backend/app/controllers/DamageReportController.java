@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import java.io.File;
 import java.nio.file.*;
+import java.util.ArrayList;
 
 import mail.MailSender;
 import play.mvc.*;
@@ -24,6 +25,11 @@ import org.joda.time.*;
 import models.*;
 import enums.*;
 
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import subprocesses.ClassifierThread;
+
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
@@ -32,7 +38,7 @@ public class DamageReportController extends Controller {
 
     private final FormFactory formFactory;
 
-    private static final String ServerAddress = "http://142.93.107.12:9000/";
+    private static final String ServerAddress = "http://142.93.107.12/";
 
     private static final String PHPIntermediaryPage = "overview.php";
 
@@ -59,6 +65,7 @@ public class DamageReportController extends Controller {
     public Result createImage() {
         EbeanServer server = Ebean.getDefaultServer();
         DynamicForm form = formFactory.form().bindFromRequest();
+
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> image = formData.getFile("image");
         String contentType = image.getContentType();
@@ -76,6 +83,7 @@ public class DamageReportController extends Controller {
         rep.images.add(img);
         server.save(rep);
 
+        System.out.println("Added image " + img.id + " to report " + rep.id);
         return ok("" + img.id);
     }
 
@@ -86,6 +94,10 @@ public class DamageReportController extends Controller {
         response().setHeader("X-Image-Description", img.description);
         response().setHeader("Content-Disposition", "attachment; filename=" + id);
         return ok(img.image);
+    }
+
+    public Result getImages() {
+        return ok(Json.toJson(models.DBImage.find.all()));
     }
 
     public Result createEvent() {
@@ -109,6 +121,34 @@ public class DamageReportController extends Controller {
         return ok(Json.toJson(Event.find.byId(id)));
     }
 
+    private Double calcFraudScore(DamageReport rep) {
+        ObjectNode json = (ObjectNode)Json.parse("{}");
+        System.out.println(json);
+        json.put("Vandalismus", (rep.damageSource.equals("Vandalismus") ? 1 : 0))
+        .put("Uberschwemmung", (rep.damageSource.equals("Uberschwemmung") ? 1 : 0))
+        .put("Offerte vorhanden", (rep.offerExists ? 1 : 0))
+        .put("Feuer", (rep.damageSource.equals("Feuer") ? 1 : 0))
+        .put("Regenwasser", (rep.damageSource.equals("Regenwasser") ? 1 : 0))
+        .put("Gebaudetechnik", (rep.damageSource.equals("Gebaudetechnik") ? 1 : 0))
+        .put("Eigenleistung", (rep.selfEstimated ? 1 : 0))
+        .put("Sturmwind", (rep.damageSource.equals("Sturmwind") ? 1 : 0))
+        .put("Rechnung vorhanden?", (rep.billExists ? 1 : 0))
+        .put("Grundwasser", (rep.damageSource.equals("Grundwasser") ? 1 : 0))
+        .put("Hagel", (rep.damageSource.equals("Hagel") ? 1 : 0))
+        .put("Leitungsbruch", (rep.damageSource.equals("Leitungsbruch") ? 1 : 0))
+        .put("Glasbruch", (rep.damageSource.equals("Glasbruch") ? 1 : 0))
+        .put("Marder", (rep.damageSource.equals("Marder") ? 1 : 0))
+        .put("Schaden behoben", 0)
+        .put("Selbsteinsch", (rep.selfEstimated ? 1 : 0))
+        .put("Blitzschlag", (rep.damageSource.equals("Blitzschlag") ? 1 : 0))
+        .put("Hochwasser", (rep.damageSource.equals("Hochwasser") ? 1 : 0))
+        .put("Erdrutsch", (rep.damageSource.equals("Erdrutsch") ? 1 : 0))
+        .put("uberspannung bei Gewitter", (rep.damageSource.equals("uberspannung bei Gewitter") ? 1 : 0))
+        .put("Fachauskunft", (rep.damageSource.equals("Fachauskunft") ? 1 : 0));
+        return ClassifierThread.runClassifier(json);
+        //return 0.0;
+    }
+
     public Result createDamageReport() {
         EbeanServer server = Ebean.getDefaultServer();
         DynamicForm form = formFactory.form().bindFromRequest();
@@ -119,8 +159,8 @@ public class DamageReportController extends Controller {
         rep.policeNr = form.get("policeNr");
         rep.name = form.get("name");
         rep.email = form.get("email");
-        rep.damageDate = (form.get("damageDate") != null && form.get("damageDate").length() > 0) ? Long.parseLong(form.get("damageDate")) : 0;
-        rep.damageSource = form.get("damageSource");
+        rep.damageDate = (form.get("damageDate") != null && form.get("damageDate").length() > 0) ? Long.parseLong(form.get("damageDate")) : new DateTime().getMillis();
+        rep.damageSource = (form.get("damageSource") != null ? form.get("damageSource") : "");
         rep.damagedItems = form.get("damagedItems");
         rep.damageDescription = form.get("damageDescription");
         rep.otherInformations = form.get("otherInformations");
@@ -129,6 +169,7 @@ public class DamageReportController extends Controller {
         rep.selfEstimated = (form.get("selfEstimated") != null && form.get("selfEstimated").length() > 0) ? Boolean.parseBoolean(form.get("selfEstimated")) : false;
         rep.billExists = (form.get("billExists") != null && form.get("billExists").length() > 0) ? Boolean.parseBoolean(form.get("billExists")) : false;
 
+        rep.fraudScore = calcFraudScore(rep);
         server.save(rep);
 
         return ok(""+rep.id);
@@ -168,7 +209,7 @@ public class DamageReportController extends Controller {
                                 "folgenden Link verfolgen: " + ServerAddress
                                 + PHPIntermediaryPage
                                 + "?id=" + rep.id
-                                + "?email=" + rep.email);
+                                + "&email=" + rep.email);
 
         return ok();
     }
