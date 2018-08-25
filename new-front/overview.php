@@ -108,20 +108,23 @@
 
             <?php if($mainReport){ ?>
 
+                <!-- <?php var_dump($mainReport);?> -->
 
                 <h2 class="reportTitle">Übersicht Nr. <?php echo $mainReport->id?></h2>
 
-                <form class="submit-state"  method="post">
-                <input type="hidden" name="id" value="<?php echo $mainReport->id?>"/>
-                <input type="hidden" name="status" value="Warten auf Kunde"/>
-                <input type="submit" class="btn btn-secondary btn-sm" value="Warten auf Kunden" />
-                </form>
+                <div class="status-btns" style="float: right;margin-right: 10px;">
+                    <form class="submit-state"  method="post">
+                    <input type="hidden" name="id" value="<?php echo $mainReport->id?>"/>
+                    <input type="hidden" name="status" value="Warten auf Kunde"/>
+                    <button class="btn btn-info btn-xs">Warten auf Kunden</button>
+                    </form>
 
-                <form class="submit-state"  method="post">
-                <input type="hidden" name="id" value="<?php echo $mainReport->id?>"/>
-                <input type="hidden" name="status" value="Abgeschlossen"/>
-                <input type="submit" class="btn btn-secondary btn-sm" value="Abgeschlossen" />
-                </form>
+                    <form class="submit-state"  method="post">
+                    <input type="hidden" name="id" value="<?php echo $mainReport->id?>"/>
+                    <input type="hidden" name="status" value="Abgeschlossen"/>
+                    <input type="submit" class="btn btn-xs btn-success" value="Abschliessen" />
+                    </form>
+                </div>
 
             <table class="table">
                 <tbody>

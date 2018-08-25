@@ -64,7 +64,7 @@ aside{
     margin-bottom: 100px;
 }
 
-button{
+container button{
     position:absolute;
     bottom:50px;
     right:50px;
@@ -81,12 +81,7 @@ textarea {
     resize: none !important;
 }
 
-input[type=text] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
+
 
 iframe {
     width: 100%;
@@ -133,4 +128,8 @@ td.highlight {
 .submit-state{
   float: left;
   padding-left: 5px;
+}
+
+.form-group input{
+    width: 300px;
 }

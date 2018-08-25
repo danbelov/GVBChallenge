@@ -43,7 +43,6 @@
         */
 
 
-        var_dump($jsonString);
 
         $curl = curl_init();
 
@@ -69,11 +68,12 @@
         if ($err) {
         echo "cURL Error #:" . $err;
         } else {
-        echo $response;
+            $location = "/overview.php?id=".$response;
+            header("Location: http://142.93.107.12$location"); /* Redirect browser */
+            exit();
+            echo $response;
+            echo $location;
         }
-
-        $location = "/overview.php?id=".$response;
-        echo $location;
         exit();
     }
 ?>
@@ -114,20 +114,21 @@
                 <h1>Willkommen!</h1>
                 <p>Schön das Sie einen Schaden habe, um was geht es?</p>
                 <div class="row damage-types-container">
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Blitzschlag direkt');">Blitzschlag direkt</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Einbruchdiebstahl');">Einbruchdiebstahl</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Erdrutsch');">Erdrutsch</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Fahrzeuganprall');">Fahrzeuganprall</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Feuer');">Feuer</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Gebäudeeinsturz');">Gebäudeeinsturz</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Gebäudetechnik');">Gebäudetechnik</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Glasbruch');">Glasbruch</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Grund-/Hangwasser');">Grund-/Hangwasser</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Hagel');">Hagel</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Hochwasser');">Hochwasser</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Lawine');">Lawine</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Leitungsbruch');">Leitungsbruch</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Marder-, Nager, Insekten');">Marder-, Nager, Insekten</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Blitzschlag direkt');next('.container-second')">Blitzschlag direkt</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Einbruchdiebstahl');next('.container-second')">Einbruchdiebstahl</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Erdrutsch');next('.container-second')">Erdrutsch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Fahrzeuganprall');next('.container-second')">Fahrzeuganprall</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Feuer');next('.container-second')">Feuer</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Gebäudeeinsturz');next('.container-second')">Gebäudeeinsturz</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Gebäudetechnik');next('.container-second')">Gebäudetechnik</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Glasbruch');next('.container-second')">Glasbruch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Grund-/Hangwasser');next('.container-second')">Grund-/Hangwasser</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Hagel');next('.container-second')">Hagel</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Hochwasser');next('.container-second')">Hochwasser</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Lawine');next('.container-second')">Lawine</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Leitungsbruch');next('.container-second')">Leitungsbruch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Marder-, Nager, Insekten');next('.container-second')">Marder-, Nager, Insekten</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Vandalismus');next('.container-second')">Vandalismus</div></div>
                     <!--<div class="col-sm-4"><div class="damage-type-card">Regen-, Schnee-, Schmelzwasser</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Risse in Fassade</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Schneedruck</div></div>
@@ -135,7 +136,6 @@
                     <div class="col-sm-4"><div class="damage-type-card">elektrische Überspannung bei Gewitter</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Steinschlag</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Sturmwind</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Vandalismus</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Wasser: Frost</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Wasser: Rückstau</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Überschwemmung</div></div>-->
@@ -145,7 +145,7 @@
                     <p>Es geht um etwas anderes:</p>
                     <input type="hidden" name="damage_reason" id="damageReason" class="form-control" value="" placeholder="Schadensgrund" onkeypress="$('#input-damageSource').val($(this).val());"/>
                 </div>
-                
+
                 <input type="text" name="damageSource" id="input-damageSource" value="" />
                 <button class="btn" type="button" onclick="next('.container-second');">Weiter</button>
         </div>
@@ -162,23 +162,41 @@
                 <h1>Fotos?</h1>
                 <p>Wenn Sie ein Foto von dem schaden haben laden Sie dieses bitte hoch</p>
 
-                <iframe height="200" width="500" src="upload.php">
-                    
-                </iframe>
+                <?php include 'upload.php'; ?>
 
-                <button class="btn" type="button" onclick="next('.container-questions');">Weiter</button>
+                <button class="btn" type="button" onclick="next('.container-damageSum');">Weiter</button>
         </div>
-        <div class="container container-questions" style="">
-                <h1>Bitte teilen sie uns noch die folgende Informationen mit:</h1>
-                <label>Versicherungsnummer</label>
-                <input type="text" name="policeNr">
-                <label>Name Vorname</label>
-                <input type="text" name="name">
-                <label>Adresse</label>
-                <input type="text" name="address">
+
+        <div class="container container-damageSum" style="">
+
+            <h1>Schadenssumme</h1>
+
+            <div class="form-group">
                 <label>Wie gross ist die Schadenssumme?</label>
-                <input type="text" name="costs">
-                <input type="submit" value="Definitiv einreichen">
+                <input class="form-control" type="text" name="costs">
+            </div>
+
+            <button class="btn" type="button" onclick="next('.container-questions');">Weiter</button>
+        </div>
+
+        <div class="container container-questions" style="">
+                <h1>Abschluss</h1>
+                <p>Zum Schluss benötigen wir noch einige persönliche Informationen</p>
+                <p><small>Wir haben keinen Datenschutz, wir tun und lassen was wir wollen ;)</small></p>
+                <div class="form-group">
+                    <label>Versicherungsnummer</label>
+                    <input  class="form-control" type="text" name="policeNr">
+                </div>
+                <div class="form-group">
+                    <label>Name Vorname</label>
+                    <input  class="form-control" type="text" name="name">
+                </div>
+                <div class="form-group">
+                    <label>Adresse</label>
+                    <input  class="form-control" type="text" name="address">
+                </div>
+
+                <button class="btn btn-danger">Definitiv einreichen</button>
         </div>
     </div>
     </form>
