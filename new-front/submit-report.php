@@ -5,11 +5,10 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $obj = new stdClass();
-        $obj->id = $_POST["id"];
         $obj->status = "Waiting for support";
         $obj->policeNr = $_POST["policeNr"];
         $obj->name = $_POST["name"];
-        $obj->email = email;
+        $obj->email = $email;
         $obj->damageDate = $_POST["damageDate"];
         $obj->damageSource = $_POST["damageSource"];
         $obj->damagedItems = $_POST["damagedItems"];
@@ -24,7 +23,6 @@
         $jsonString = json_encode($obj);
 
         /*{
-        "id": 214,
         "status": "WaitingForCustomer",
         "fraudScore": 0.123,
         "policeNr": "12312-12",
@@ -74,6 +72,8 @@
         echo $response;
         }
 
+        $location = "/overview.php?id=".$response;
+        echo $location;
         exit();
     }
 ?>
@@ -99,9 +99,8 @@
 
 </head>
 <body>
-    <form method="post" id="theoneandonlyform">
+    <form method="post" id="theoneandonlyform" action="submit-report.php/?email=<?php echo $email ?>">
 
-    <input type="hidden" name="id" value="<?php echo $id ?>" />
     <input type="hidden" name="damageDate" value="" />
     <input type="hidden" name="damagedItems" value="" />
     <input type="hidden" name="otherInformations" value="" />
@@ -115,20 +114,20 @@
                 <h1>Willkommen!</h1>
                 <p>Schön das Sie einen Schaden habe, um was geht es?</p>
                 <div class="row damage-types-container">
-                    <div class="col-sm-4"><div class="damage-type-card">Blitzschlag direkt</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Einbruchdiebstahl</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Erdrutsch</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Fahrzeuganprall</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Feuer</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Gebäudeeinsturz</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Gebäudetechnik</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Glasbruch</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Grund-/Hangwasser</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Hagel</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Hochwasser</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Lawine</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Leitungsbruch</div></div>
-                    <div class="col-sm-4"><div class="damage-type-card">Marder-, Nager, Insekten</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Blitzschlag direkt');">Blitzschlag direkt</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Einbruchdiebstahl');">Einbruchdiebstahl</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Erdrutsch');">Erdrutsch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Fahrzeuganprall');">Fahrzeuganprall</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Feuer');">Feuer</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Gebäudeeinsturz');">Gebäudeeinsturz</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Gebäudetechnik');">Gebäudetechnik</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Glasbruch');">Glasbruch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Grund-/Hangwasser');">Grund-/Hangwasser</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Hagel');">Hagel</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Hochwasser');">Hochwasser</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Lawine');">Lawine</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Leitungsbruch');">Leitungsbruch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card" onclick="$('#input-damageSource').val('Marder-, Nager, Insekten');">Marder-, Nager, Insekten</div></div>
                     <!--<div class="col-sm-4"><div class="damage-type-card">Regen-, Schnee-, Schmelzwasser</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Risse in Fassade</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Schneedruck</div></div>
@@ -144,10 +143,10 @@
 
                 <div class="left-bottom-corner">
                     <p>Es geht um etwas anderes:</p>
-                    <input type="text" class="form-control" placeholder="Schadensgrund"/>
+                    <input type="hidden" name="damage_reason" id="damageReason" class="form-control" value="" placeholder="Schadensgrund" onkeypress="$('#input-damageSource').val($(this).val());"/>
                 </div>
                 
-                <input type="hidden" name="damageSource" id="input-damageSource" value="" />
+                <input type="text" name="damageSource" id="input-damageSource" value="" />
                 <button class="btn" type="button" onclick="next('.container-second');">Weiter</button>
         </div>
         <div class="container container-second" style="">

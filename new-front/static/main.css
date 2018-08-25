@@ -1,6 +1,7 @@
 aside{
     padding-left: 30px !important;
     padding-top: 50px !important;
+    background-color: rgb(240,240,240);
 }
 
 .active{
@@ -14,7 +15,7 @@ aside{
 }
 
 .border-round{
-    
+
     border-radius: 4px;
 }
 
@@ -102,3 +103,34 @@ progress { width: 100%; }
 progress:after { content: '%'; }
 .fail { background: #c00; padding: 2px; color: #fff; }
 .hidden { display: none !important;}
+
+.btn-state{
+  padding-left: 50px;
+}
+
+.menu-item{
+  padding-left: 10px;
+}
+
+a{
+  color: rgb(100,100,100) !important;
+  text-decoration: none !important;
+}
+
+.blue-background{
+  background-color: rgb(51,153,255);
+}
+
+td.highlight {
+    background-color: whitesmoke !important;
+}
+
+.reportTitle{
+  float: left;
+  padding-right: 100px;
+}
+
+.submit-state{
+  float: left;
+  padding-left: 5px;
+}
