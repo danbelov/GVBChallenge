@@ -74,11 +74,8 @@ public class MailGrabber extends Controller {
                                                       + "?id=" + report.id
                                                       + "?email=" + report.email);
 
-            List<DamageReport> repList = DamageReport.find.query().where().ge("email", form.get("sender")).findList();
-            DamageReport rep = repList.get(repList.size() - 1);
-
-            System.out.println("E-Mail from " + rep.email + " received, id: " + rep.id + ", msg: " + rep.events.get(0).text);
-            return ok("E-Mail from " + rep.email + " received, id: " + rep.id + ", msg: " + rep.events.get(0).text);
+            System.out.println("E-Mail from " + report.email + " received, id: " + report.id + ", msg: " + report.events.get(0).text);
+            return ok("E-Mail from " + report.email + " received, id: " + report.id + ", msg: " + report.events.get(0).text);
         }
     }
 
