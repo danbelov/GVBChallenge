@@ -145,7 +145,7 @@
                     <p>Es geht um etwas anderes:</p>
                     <input type="hidden" name="damage_reason" id="damageReason" class="form-control" value="" placeholder="Schadensgrund" onkeypress="$('#input-damageSource').val($(this).val());"/>
                 </div>
-                
+
                 <input type="text" name="damageSource" id="input-damageSource" value="" />
                 <button class="btn" type="button" onclick="next('.container-second');">Weiter</button>
         </div>
@@ -162,9 +162,7 @@
                 <h1>Fotos?</h1>
                 <p>Wenn Sie ein Foto von dem schaden haben laden Sie dieses bitte hoch</p>
 
-                <iframe height="200" width="500" src="upload.php">
-                    
-                </iframe>
+                <?php include 'upload.php'; ?>
 
                 <button class="btn" type="button" onclick="next('.container-damageSum');">Weiter</button>
         </div>
