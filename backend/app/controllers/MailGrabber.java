@@ -50,6 +50,7 @@ public class MailGrabber extends Controller {
             event.text = form.get("msg");
 
             DamageReport report = new DamageReport();
+            report.status = "Waiting for customer";
             report.email = form.get("sender");
             report.damageDate = new DateTime().getMillis();
             report.events.add(event);

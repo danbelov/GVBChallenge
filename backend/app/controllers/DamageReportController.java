@@ -36,6 +36,15 @@ public class DamageReportController extends Controller {
         this.formFactory = formFactory;
     }
 
+    public Result changeStatus(Long id) {
+        EbeanServer server = Ebean.getDefaultServer();
+        DynamicForm form = formFactory.form().bindFromRequest();
+        DamageReport rep = DamageReport.find.byId(id);
+        rep.status = form.get("status");
+        server.save(rep);
+        return ok();
+    }
+
     public Result createImage() {
         EbeanServer server = Ebean.getDefaultServer();
         DynamicForm form = formFactory.form().bindFromRequest();
@@ -95,19 +104,19 @@ public class DamageReportController extends Controller {
 
         DamageReport rep = new DamageReport();
         rep.status = form.get("status");
-        rep.fraudScore = Double.parseDouble(form.get("fraudScore"));
+        rep.fraudScore = (form.get("fraudScore") != null && form.get("fraudScore").length() > 0) ? Double.parseDouble(form.get("fraudScore")) : 0;
         rep.policeNr = form.get("policeNr");
         rep.name = form.get("name");
         rep.email = form.get("email");
-        rep.damageDate = Long.parseLong(form.get("damageDate"));
+        rep.damageDate = (form.get("damageDate") != null && form.get("damageDate").length() > 0) ? Long.parseLong(form.get("damageDate")) : 0;
         rep.damageSource = form.get("damageSource");
         rep.damagedItems = form.get("damagedItems");
         rep.damageDescription = form.get("damageDescription");
         rep.otherInformations = form.get("otherInformations");
-        rep.offerExists = Boolean.parseBoolean(form.get("offerExists"));
-        rep.costs = Double.parseDouble(form.get("costs"));
-        rep.selfEstimated = Boolean.parseBoolean(form.get("selfEstimated"));
-        rep.billExists = Boolean.parseBoolean(form.get("billExists"));
+        rep.offerExists = (form.get("offerExists") != null && form.get("offerExists").length() > 0) ? Boolean.parseBoolean(form.get("offerExists")) : false;
+        rep.costs = (form.get("costs") != null && form.get("costs").length() > 0) ? Double.parseDouble(form.get("costs")) : 0;
+        rep.selfEstimated = (form.get("selfEstimated") != null && form.get("selfEstimated").length() > 0) ? Boolean.parseBoolean(form.get("selfEstimated")) : false;
+        rep.billExists = (form.get("billExists") != null && form.get("billExists").length() > 0) ? Boolean.parseBoolean(form.get("billExists")) : false;
 
         server.save(rep);
 

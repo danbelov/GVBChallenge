@@ -18,6 +18,7 @@ import static play.test.Helpers.*;
 import static play.test.Helpers.route;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class HomeControllerTest extends WithApplication {
 
@@ -66,7 +67,6 @@ public class HomeControllerTest extends WithApplication {
                 "\"policeNr\" : \"5\"," +
                 "\"damageDate\" : \"50505050\"," +
                 "\"offerExists\" : \"true\"," +
-                "\"costs\" : \"5000\"," +
                 "\"selfEstimated\" : \"false\"," +
                 "\"billExists\" : \"false\"}");
         Http.RequestBuilder request = new Http.RequestBuilder()
@@ -76,6 +76,34 @@ public class HomeControllerTest extends WithApplication {
         Result result = route(app, request);
         assertEquals(OK, result.status());
         assertEquals("1", ((play.http.HttpEntity.Strict)result.body()).data().utf8String());
+    }
+
+    @Test
+    public void testEditReport() {
+        testCreateReport();
+        Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(GET)
+                .uri("/DamageReport/1");
+        Result result = route(app, request);
+        assertEquals(OK, result.status());
+        ObjectNode json = (ObjectNode)Json.parse(((play.http.HttpEntity.Strict)result.body()).data().utf8String());
+        json.put("fraudScore", "20");
+
+        request = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/DamageReport")
+                .bodyJson(json);
+        result = route(app, request);
+        assertEquals(OK, result.status());
+
+        request = new Http.RequestBuilder()
+                .method(GET)
+                .uri("/DamageReport/1");
+        result = route(app, request);
+        assertEquals(OK, result.status());
+        JsonNode jnode = Json.parse(((play.http.HttpEntity.Strict)result.body()).data().utf8String());
+        System.out.println(((play.http.HttpEntity.Strict)result.body()).data().utf8String());
+        assertEquals("20.0", jnode.findPath("fraudScore").toString());
     }
 
     @Test
