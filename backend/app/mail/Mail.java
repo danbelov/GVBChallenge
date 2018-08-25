@@ -19,18 +19,30 @@ public class Mail {
         props.put("mail.smtps.auth","true");
         Session session = Session.getInstance(props, null);
         Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress("mail@tovare.com"));;
-        msg.setRecipients(Message.RecipientType.TO,
-                InternetAddress.parse(recipient, false));
-        msg.setSubject(subject);
-        msg.setText(text);
-        msg.setSentDate(new Date());
-        SMTPTransport t =
-                (SMTPTransport)session.getTransport("smtps");
-        t.connect("smtp.gmail.com", "admin@tovare.com", "<insert password here>");
-        t.sendMessage(msg, msg.getAllRecipients());
-        System.out.println("Response: " + t.getLastServerResponse());
-        t.close();
+        try {
+            msg.setFrom(new InternetAddress("gvbschaden@gmail.com"));
+            msg.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(recipient, false));
+            msg.setSubject(subject);
+            msg.setText(text);
+            msg.setSentDate(new Date());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        SMTPTransport t = null;
+        try {
+            t = (SMTPTransport)session.getTransport("smtps");
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
+        }
+        try {
+            t.connect("smtp.gmail.com", "gvbschaden@gmail.com", "gvbhack18");
+            t.sendMessage(msg, msg.getAllRecipients());
+            System.out.println("Response: " + t.getLastServerResponse());
+            t.close();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
 }
