@@ -10,7 +10,7 @@ public class MailTest {
     @Test
     public void testMailSending(){
         Mail mail = new Mail();
-        mail.sendMail("", "test", "test");
+        mail.sendMail("danbelov7@gmail.com", "test", "test");
         assertNotNull(mail);
     }
 
