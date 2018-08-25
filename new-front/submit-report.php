@@ -26,7 +26,6 @@
         <div class="container container-first">
                 <h1>Willkommen!</h1>
                 <p>Schön das Sie einen Schaden habe, um was geht es?</p>
-
                 <div class="row damage-types-container">
                     <div class="col-sm-4"><div class="damage-type-card">Blitzschlag direkt</div></div>
                     <div class="col-sm-4"><div class="damage-type-card">Einbruchdiebstahl</div></div>
@@ -63,37 +62,45 @@
                 <input type="hidden" name="damageSource" id="input-damageSource" value="" />
                 <button class="btn" type="button" onclick="next('.container-second');">Weiter</button>
         </div>
-        <div class="container container-second">
+        <div class="container container-second" style="display:none;">
 
-                <label for="" text="Was ist passiert?"></label>
-                <input type = "text" name ="">
+                <label>Was ist passiert?</label>
                 <textarea>
 
                 </textarea>
                 <button class="btn btn-default" type="button" onclick="next('.container-third');">Weiter</button>
         </div>
         <div class="container container-third" style="display: none;">
-                <label for="">Haben Sie ein Foto von der Schaden?</label>
-                <button class="btn btn-success" type="button" onclick="next('.container-third');">Ja</button>
-                <button class="btn btn-danger" type="button" onclick="next('.container-questions');">Nein</button>
-                <textarea>        
-                </textarea>
+                <label>Haben Sie ein Foto von der Schaden?</label>
+                <div class="button-group" role="group" aria-label="Schadenfoto">
+                    <button class="btn btn-warning" type="button" onclick="next('.container-third');">Zurück</button>
+                    <button class="btn btn-success" type="button" onclick="next('.container-upload');">Ja</button>
+                    <button class="btn btn-danger" type="button" onclick="next('.container-questions');">Nein</button>
+                </div>
         </div>
-        <div class="container container-upload" style="display: none;">
+        <div class="container container-upload form-group" style="display: none;">
                 <label>Bitte laden Sie das Foto auf den Server</label>
-                    <button class="btn btn-success" type="button" onclick="next('.container-third');">Zurück</button>
+                <div class="btn-group" role="group" aria-label="Fotoupload">
+                    <button class="btn btn-warning" type="button" onclick="next('.container-third');">Zurück</button>
                     <button class="btn btn-success" type="button" onclick="next('.container-questions');">Ja</button>
                     <button class="btn btn-danger" type="button" onclick="next('.container-questions');">Nein</button>
-                <textarea>
-                    
-                </textarea>
-                <button class="btn btn-default" type="button" onclick="next('.container-questions');">Weiter</button>
+                    <button class="btn btn-primary" type="button" onclick="next('.container-questions');">Weiter</button>
+                </div>
         </div>
         <div class="container container-questions" style="display: none;">
-            <h1>Bitte teilen sie uns noch die folgende information mit:</h1>
+            
+        <div class="form-group row">
+            <h1>Bitte teilen sie uns noch die folgende Informationen mit:</h1>
             <label>Versicherungsnummer</label>
-            <input type="text" >
-            <input type="submit" >
+            <input type="text" name="policeNr">
+            <label>Name</label>
+            <input type="text" name="lastname">
+            <label>Vorname</label>
+            <input type="text" name="firstname">
+            <label>Adresse</label>
+            <input type="text" name="address">
+            <input type="submit" value="Definitiv einreichen">
+        <div>
         </div>
     </div>
     </form>
