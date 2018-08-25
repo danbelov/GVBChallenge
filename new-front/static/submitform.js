@@ -1,11 +1,10 @@
 $(document).ready(function(){
-    //$('.container-first').show();
+    next('.container-first');
 });
 
 function next(next){
-    console.log('TEST');
     $(document).ready(function(){
-        //$(".container").hide();
+        $(".container").hide();
         $(next).show();
     });
 }
