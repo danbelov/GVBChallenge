@@ -12,7 +12,29 @@
     foreach($reports as $r)
         if($r->id == $id)
             $mainReport = $r;
-    
+
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['status']) && isset($_POST['id'])){
+          ChangeState($_POST['status'],$id);
+        }
+      }
+
+    function changeState($status,$id){
+      $url = 'http://142.93.107.12:9000/ChangeStatus/'.$id;
+      $data = array("status" => $status);
+      $data_string = json_encode($data);
+
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data_string))
+      );
+      $result = curl_exec($ch);
+    }
+
 ?>
 
 <!doctype html>
@@ -34,40 +56,72 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
 </head>
 <body>
 <div class="row">
-    <aside class="col-sm-4 list-group">
+  <aside class="col-sm-4 list-group">
+    <h5>Schadensmeldungen</h5>
+    <script>$(document).ready( function () {
 
-    <div class="menu-item border">
-        <h5>Schadensmeldungen</h5>
-    </div>
+     $('#table').DataTable();
 
-    <?php
-    foreach($reports as $r){
+     $('#table').delegate('tbody > tr', 'click', function ()
+     {
+      let tr = $(this);
+      let url = tr.data('url');
+        // 'this' refers to the current <td>, if you need information out of it
+        window.location.replace(url)
+      });
+    } );
 
-        $link="overview.php?id=" . $r->id;
+    </script>
 
-        ?>
-        
-            <div class="menu-item border <?php if($id == $r->id) echo 'active' ?>">
-                <a href="<?php echo $link; ?>">
-                    <div class="row">
-                    <p class="col-sm-6"><?php echo $r->name;?></p>
-                    <p class="col-sm-6"><small><?php echo $r->status;?></small></p>
-                    </div>
-                </a>
-            </div>
-        <?php
-    }?>
+    <table id="table" class="display hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+          <?php foreach($reports as $r){
+
+            $link="overview.php?id=" . $r->id;
+            ?>
+            <tr data-url="<?php echo $link; ?>">
+              <!-- <a href="<?php echo $link; ?>"> -->
+                <td><?php echo $r->name;?></td>
+                <td><?php echo $r->status;?></td>
+            </tr>
+          <?php } ?>
+        </tbody>
+    </table>
+
     </aside>
+
 
     <main class="report-container col-sm-8">
 
             <?php if($mainReport){ ?>
-                
-                
-                <h2>Übersicht Nr. <?php echo $mainReport->id?></h2>
+
+
+                <h2 class="reportTitle">Übersicht Nr. <?php echo $mainReport->id?></h2>
+
+                <form class="submit-state"  method="post">
+                <input type="hidden" name="id" value="<?php echo $mainReport->id?>"/>
+                <input type="hidden" name="status" value="Warten auf Kunde"/>
+                <input type="submit" class="btn btn-secondary btn-sm" value="Warten auf Kunden" />
+                </form>
+
+                <form class="submit-state"  method="post">
+                <input type="hidden" name="id" value="<?php echo $mainReport->id?>"/>
+                <input type="hidden" name="status" value="Abgeschlossen"/>
+                <input type="submit" class="btn btn-secondary btn-sm" value="Abgeschlossen" />
+                </form>
 
             <table class="table">
                 <tbody>
@@ -100,7 +154,7 @@
 
             <h2>Schaden</h2>
 
-            
+
         <p></p>
         <p></p>
         <p></p>
@@ -148,8 +202,8 @@
         <div class="eventscontainer">
             <?php
             foreach($mainReport->events as $event){?>
-             
-                <div class="event border border-round">
+
+                <div <?php echo $event->type == "email" ?  "class='event border border-round blue-background'":"class='event border border-round'";  ?>>
                     <div class="row">
                         <p class="col-sm-2"><?php echo $event->time;?></p>
                         <p class="col-sm-10"><?php echo $event->text;?></p>
@@ -163,7 +217,7 @@
         <div class="imagescontainer">
             <?php
             foreach($mainReport->images as $img){?>
-             
+
                 <div class="image">
                     <img src="<?php echo $img->url;?>"/>
                     <p><?php echo $img->description;?></p>
@@ -178,4 +232,3 @@
 </div>
 </body>
 </html>
-
