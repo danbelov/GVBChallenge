@@ -1,5 +1,81 @@
 <?php
-    $id = 12;
+    $id = $_GET["id"];
+    $email= $_GET["email"];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $obj = new stdClass();
+        $obj->id = $_POST["id"];
+        $obj->status = "Waiting for support";
+        $obj->policeNr = $_POST["policeNr"];
+        $obj->name = $_POST["name"];
+        $obj->email = email;
+        $obj->damageDate = $_POST["damageDate"];
+        $obj->damageSource = $_POST["damageSource"];
+        $obj->damagedItems = $_POST["damagedItems"];
+        $obj->damageDescription = $_POST["damageDescription"];
+        $obj->otherInformations = $_POST["otherInformations"];
+        $obj->offerExists = $_POST["offerExists"];
+        $obj->costs = $_POST["costs"];
+        $obj->selfEstimated = $_POST["selfEstimated"];
+        $obj->costs = $_POST["costs"];
+        $obj->billExists = $_POST["billExists"];
+
+        $jsonString = json_encode($obj);
+
+        /*{
+        "id": 214,
+        "status": "WaitingForCustomer",
+        "fraudScore": 0.123,
+        "policeNr": "12312-12",
+        "name": "Peter Beispiel",
+        "email": "peter@beispiel.ch",
+        "damageDate": "Datum des Ereignisses",
+        "damageSource": "Schadenshergang",
+        "damagedItems": [
+            "Dach",
+            "Keller"
+        ],
+        "damageDescription": "Etwas ist kapputgegangen",
+        "otherInformations": "blablabla",
+        "offerExists": true,
+        "costs": 2323.12,
+        "selfEstimated": false,
+        "billExists": true}
+        */
+
+
+        var_dump($jsonString);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "http://142.93.107.12:9000/DamageReport",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "PUT",
+        CURLOPT_POSTFIELDS => $jsonString,
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/json"
+        ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        } else {
+        echo $response;
+        }
+
+        exit();
+    }
 ?>
 <!doctype html>
 
@@ -23,7 +99,16 @@
 
 </head>
 <body>
-    <form action="/submit" method="post">
+    <form method="post" id="theoneandonlyform">
+
+    <input type="hidden" name="id" value="<?php echo $id ?>" />
+    <input type="hidden" name="damageDate" value="" />
+    <input type="hidden" name="damagedItems" value="" />
+    <input type="hidden" name="otherInformations" value="" />
+    <input type="hidden" name="offerExists" value="" />
+    <input type="hidden" name="selfEstimated" value="" />
+    <input type="hidden" name="billExists" value="" />
+
     <div class="container-holder">
 
         <div class="container container-first">
@@ -65,15 +150,15 @@
                 <input type="text" name="damageSource" id="input-damageSource" value="" />
                 <button class="btn" type="button" onclick="next('.container-second');">Weiter</button>
         </div>
-        <div class="container container-second" style="display:none;">
+        <div class="container container-second" style="">
 
                 <h1>Was ist passiert?</h1>
                 <p>Beschreiben Sie möglichst detailiert was passiert ist</p>
 
-                <textarea class="form-control" rows="10" id="damageDescription"></textarea>
+                <textarea class="form-control" rows="10" id="damageDescription" name="damageDescription" form="theoneandonlyform"></textarea>
                 <button class="btn btn-default" type="button" onclick="next('.container-third');">Weiter</button>
         </div>
-        <div class="container container-third style="display: none;"">
+        <div class="container container-third">
 
                 <h1>Fotos?</h1>
                 <p>Wenn Sie ein Foto von dem schaden haben laden Sie dieses bitte hoch</p>
@@ -84,14 +169,12 @@
 
                 <button class="btn" type="button" onclick="next('.container-questions');">Weiter</button>
         </div>
-        <div class="container container-questions" style="display: none;">
+        <div class="container container-questions" style="">
                 <h1>Bitte teilen sie uns noch die folgende Informationen mit:</h1>
                 <label>Versicherungsnummer</label>
                 <input type="text" name="policeNr">
-                <label>Name</label>
-                <input type="text" name="lastname">
-                <label>Vorname</label>
-                <input type="text" name="firstname">
+                <label>Name Vorname</label>
+                <input type="text" name="name">
                 <label>Adresse</label>
                 <input type="text" name="address">
                 <label>Wie gross ist die Schadenssumme?</label>
