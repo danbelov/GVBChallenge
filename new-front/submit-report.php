@@ -1,3 +1,6 @@
+<?php
+    $id = 12;
+?>
 <!doctype html>
 
 <html lang="en">
@@ -65,28 +68,29 @@
         </div>
         <div class="container container-second">
 
-                <label for="" text="Was ist passiert?"></label>
-                <input type = "text" name ="">
-                <textarea>
+                <h1>Was ist passiert?</h1>
+                <p>Beschreiben Sie möglichst detailiert was passiert ist</p>
 
-                </textarea>
+                <textarea class="form-control" rows="10" id="damageDescription"></textarea>
                 <button class="btn btn-default" type="button" onclick="next('.container-third');">Weiter</button>
         </div>
-        <div class="container container-third" style="display: none;">
-                <label for="">Haben Sie ein Foto von der Schaden?</label>
-                <button class="btn btn-success" type="button" onclick="next('.container-third');">Ja</button>
-                <button class="btn btn-danger" type="button" onclick="next('.container-questions');">Nein</button>
-                <textarea>        
-                </textarea>
+        <div class="container container-third">
+
+                <h1>Fotos?</h1>
+                <p>Wenn Sie ein Foto von dem schaden haben laden Sie dieses bitte hoch</p>
+
+                <iframe height="200" width="500" src="upload.php">
+                    
+                </iframe>
+
+                <button class="btn" type="button" onclick="next('.container-questions');">Weiter</button>
         </div>
         <div class="container container-upload" style="display: none;">
                 <label>Bitte laden Sie das Foto auf den Server</label>
                     <button class="btn btn-success" type="button" onclick="next('.container-third');">Zurück</button>
                     <button class="btn btn-success" type="button" onclick="next('.container-questions');">Ja</button>
                     <button class="btn btn-danger" type="button" onclick="next('.container-questions');">Nein</button>
-                <textarea>
-                    
-                </textarea>
+                
                 <button class="btn btn-default" type="button" onclick="next('.container-questions');">Weiter</button>
         </div>
         <div class="container container-questions" style="display: none;">
