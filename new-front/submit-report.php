@@ -1,7 +1,6 @@
 <?php
     $id = $_GET["id"];
     $email= $_GET["email"];
-    echo "<!-- $email -->";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -71,10 +70,11 @@
         } else {
             $location = "/overview.php?id=".$response;
             header("Location: http://142.93.107.12$location"); /* Redirect browser */
-
+            exit();
             echo $response;
             echo $location;
         }
+        exit();
     }
 ?>
 <!doctype html>
