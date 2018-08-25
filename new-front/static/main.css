@@ -80,6 +80,20 @@ textarea {
     resize: none !important;
 }
 
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+iframe {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
 #holder { border: 10px dashed #ccc; width: 300px; min-height: 300px; margin: 20px auto;}
 #holder.hover { border: 10px dashed #0c0; }
 #holder img { display: block; margin: 10px auto; }
