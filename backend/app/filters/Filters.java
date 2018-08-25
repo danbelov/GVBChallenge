@@ -7,7 +7,9 @@ import play.http.DefaultHttpFilters;
 import javax.inject.Inject;
 
 public class Filters extends DefaultHttpFilters {
-    @Inject public Filters(AllowedHostsFilter allowedHostsFilter) {
+    @Inject
+    public Filters(AllowedHostsFilter allowedHostsFilter) {
+
         super(allowedHostsFilter);
     }
 }

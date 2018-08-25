@@ -41,10 +41,12 @@ public class DamageReport extends Model {
     public Boolean selfEstimated;
     public Boolean billExists;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "damageReport") @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "damageReport")
+    @JsonBackReference
     public List<DBImage> images;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "damageReport") @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "damageReport")
+    @JsonBackReference
     public List<Event> events = new ArrayList<>();
 
     public static final Finder<Long, DamageReport> find = new Finder<>(DamageReport.class);

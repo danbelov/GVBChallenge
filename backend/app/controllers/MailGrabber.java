@@ -2,6 +2,7 @@ package controllers;
 
 import javax.inject.Inject;
 
+import mail.MailSender;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.data.DynamicForm;
@@ -26,6 +27,11 @@ public class MailGrabber extends Controller {
     static final Logger LOG = LoggerFactory.getLogger(MailGrabber.class);
 
     private final FormFactory formFactory;
+
+    private static final String ServerAddress = "http://142.93.107.12:9000/";
+
+    private static final String PHPIntermediaryPage = "submit-report.php";
+
 
     @Inject
     public MailGrabber(FormFactory formFactory) {
@@ -55,6 +61,18 @@ public class MailGrabber extends Controller {
             report.damageDate = new DateTime().getMillis();
             report.events.add(event);
             server.save(report);
+
+            MailSender mailSender = new MailSender();
+
+            mailSender.sendMail(report.email,
+                    "Ihre Anfrage bei der GVB",
+                    "Sehr geehrte Damen und Herren, " +
+                            "bitte verfolständigen Sie Ihre Anfrage"
+                            +" Diese können Sie unter dem " +
+                            "folgenden Link finden: " + ServerAddress
+                                                      + PHPIntermediaryPage
+                                                      + "?id=" + report.id
+                                                      + "?email=" + report.email);
 
             List<DamageReport> repList = DamageReport.find.query().where().ge("email", form.get("sender")).findList();
             DamageReport rep = repList.get(repList.size() - 1);

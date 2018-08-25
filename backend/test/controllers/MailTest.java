@@ -1,6 +1,6 @@
 package controllers;
 
-import mail.Mail;
+import mail.MailSender;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -9,7 +9,7 @@ public class MailTest {
 
     @Test
     public void testMailSending(){
-        Mail mail = new Mail();
+        MailSender mail = new MailSender();
         mail.sendMail("", "test", "test");
         assertNotNull(mail);
     }

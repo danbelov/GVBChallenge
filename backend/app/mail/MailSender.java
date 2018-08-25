@@ -11,7 +11,7 @@ import javax.mail.internet.*;
 
 import com.sun.mail.smtp.*;
 
-public class Mail {
+public class MailSender {
 
     public void sendMail(String recipient, String subject, String text) {
         Properties props = System.getProperties();

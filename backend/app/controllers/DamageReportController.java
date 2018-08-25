@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import java.io.File;
 import java.nio.file.*;
 
+import mail.MailSender;
 import play.mvc.*;
 import play.libs.Json;
 
@@ -30,6 +31,10 @@ import enums.*;
 public class DamageReportController extends Controller {
 
     private final FormFactory formFactory;
+
+    private static final String ServerAddress = "http://142.93.107.12:9000/";
+
+    private static final String PHPIntermediaryPage = "overview.php";
 
     @Inject
     public DamageReportController(FormFactory formFactory) {
@@ -150,6 +155,20 @@ public class DamageReportController extends Controller {
         rep.billExists = Boolean.parseBoolean(form.get("billExists"));
 
         server.save(rep);
+
+        MailSender mailSender = new MailSender();
+
+        mailSender.sendMail(rep.email,
+                      "Status von Ihrer Anfrage hat sich in der Zwischenzeit verändert",
+                        "Sehr geehrte Damen und Herren, " +
+                                "der Status von Ihrer Anfrage " +
+                                "hat sich in der Zwischenzeit verändert."
+                                +" Diese können Sie jedes mal " +
+                                "online unter dem " +
+                                "folgenden Link verfolgen: " + ServerAddress
+                                + PHPIntermediaryPage
+                                + "?id=" + rep.id
+                                + "?email=" + rep.email);
 
         return ok();
     }
