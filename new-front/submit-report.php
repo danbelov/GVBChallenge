@@ -25,15 +25,47 @@
     <form action="/submit" method="post">
     <div class="container-holder">
         <div class="container container-first">
-                <label for=""></label>
-                <input type = "text" name =""/>
-                <select>
-                    <option id="1" name="">
-                    <option id="2" name="">
-                </select>
-                <button type="button" onclick="next('.container-second');">Weiter</button>
+                <h1>Willkommen!</h1>
+                <p>Schön das Sie einen Schaden habe, um was geht es?</p>
+
+                <div class="row damage-types-container">
+                    <div class="col-sm-4"><div class="damage-type-card">Blitzschlag direkt</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Einbruchdiebstahl</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Erdrutsch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Fahrzeuganprall</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Feuer</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Gebäudeeinsturz</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Gebäudetechnik</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Glasbruch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Grund-/Hangwasser</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Hagel</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Hochwasser</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Lawine</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Leitungsbruch</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Marder-, Nager, Insekten</div></div>
+                    <!--<div class="col-sm-4"><div class="damage-type-card">Regen-, Schnee-, Schmelzwasser</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Risse in Fassade</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Schneedruck</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Solaranlage: Beschädigung/Zerstörung/ Diebstahl Anlage </div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">elektrische Überspannung bei Gewitter</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Steinschlag</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Sturmwind</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Vandalismus</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Wasser: Frost</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Wasser: Rückstau</div></div>
+                    <div class="col-sm-4"><div class="damage-type-card">Überschwemmung</div></div>-->
+                </div>
+
+                <div class="left-bottom-corner">
+                    <p>Es geht um etwas anderes:</p>
+                    <input type="text" class="form-control" placeholder="Schadensgrund"/>
+                </div>
+                
+                <input type="hidden" name="damageSource" id="input-damageSource" value="" />
+                <button class="btn" type="button" onclick="next('.container-second');">Weiter</button>
         </div>
         <div class="container container-second">
+
                 <label for="" text="Was ist passiert?"></label>
                 <input type = "text" name ="">
                 <textarea>
