@@ -1,12 +1,11 @@
 $(document).ready(function(){
-    //$(".container").hide();
     $('.container-first').show();
 });
 
-function next(nextId){
+function next(next){
     console.log('TEST');
     $(document).ready(function(){
-        //$(".container").hide();
-        $(nextId).show();
+        $(".container").hide();
+        $(next).show();
     });
 }
