@@ -63,6 +63,8 @@
 </head>
 <body>
 <div class="row">
+
+    <?php if($_GET["admin"]) { ?>
   <aside class="col-sm-4 list-group">
     <h5>Schadensmeldungen</h5>
     <script>$(document).ready( function () {
@@ -101,7 +103,7 @@
         </tbody>
     </table>
 
-    </aside>
+    </aside><?php } ?>
 
 
     <main class="report-container col-sm-8">
