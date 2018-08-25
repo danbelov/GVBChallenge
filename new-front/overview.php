@@ -1,6 +1,5 @@
 <?php
-
-    $json = file_get_contents("https://7ed86656-f226-49a4-ad3f-9676893cc520.mock.pstmn.io/DamageReport");
+    $json = file_get_contents("http://142.93.107.12:9000/DamageReport");
     $reports = json_decode($json);
 
     $id = $_GET["id"];

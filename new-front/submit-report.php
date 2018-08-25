@@ -5,11 +5,10 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $obj = new stdClass();
-        $obj->id = $_POST["id"];
         $obj->status = "Waiting for support";
         $obj->policeNr = $_POST["policeNr"];
         $obj->name = $_POST["name"];
-        $obj->email = email;
+        $obj->email = $email;
         $obj->damageDate = $_POST["damageDate"];
         $obj->damageSource = $_POST["damageSource"];
         $obj->damagedItems = $_POST["damagedItems"];
@@ -24,7 +23,6 @@
         $jsonString = json_encode($obj);
 
         /*{
-        "id": 214,
         "status": "WaitingForCustomer",
         "fraudScore": 0.123,
         "policeNr": "12312-12",
@@ -74,6 +72,8 @@
         echo $response;
         }
 
+        $location = "/overview.php?id=".$response;
+        echo $location;
         exit();
     }
 ?>
@@ -99,9 +99,8 @@
 
 </head>
 <body>
-    <form method="post" id="theoneandonlyform">
+    <form method="post" id="theoneandonlyform" action="submit-report.php/?email=<?php echo $email ?>">
 
-    <input type="hidden" name="id" value="<?php echo $id ?>" />
     <input type="hidden" name="damageDate" value="" />
     <input type="hidden" name="damagedItems" value="" />
     <input type="hidden" name="otherInformations" value="" />
