@@ -1,3 +1,7 @@
+.vscode/
+classifier/env/
+*.pyc
+
 # Compiled class file
 *.class
 
