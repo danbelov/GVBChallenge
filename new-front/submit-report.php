@@ -56,7 +56,7 @@
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_CUSTOMREQUEST => "PUT",
         CURLOPT_POSTFIELDS => $jsonString,
         CURLOPT_HTTPHEADER => array(
             "Content-Type: application/json"
@@ -99,7 +99,7 @@
 
 </head>
 <body>
-    <form method="post">
+    <form method="post" id="theoneandonlyform">
 
     <input type="hidden" name="id" value="<?php echo $id ?>" />
     <input type="hidden" name="damageDate" value="" />
@@ -150,15 +150,15 @@
                 <input type="hidden" name="damageSource" id="input-damageSource" value="" />
                 <button class="btn" type="button" onclick="next('.container-second');">Weiter</button>
         </div>
-        <div class="container container-second" style="display:none;">
+        <div class="container container-second" style="">
 
                 <h1>Was ist passiert?</h1>
                 <p>Beschreiben Sie möglichst detailiert was passiert ist</p>
 
-                <textarea class="form-control" rows="10" id="damageDescription"></textarea>
+                <textarea class="form-control" rows="10" id="damageDescription" name="damageDescription" form="theoneandonlyform"></textarea>
                 <button class="btn btn-default" type="button" onclick="next('.container-third');">Weiter</button>
         </div>
-        <div class="container container-third style="display: none;"">
+        <div class="container container-third">
 
                 <h1>Fotos?</h1>
                 <p>Wenn Sie ein Foto von dem schaden haben laden Sie dieses bitte hoch</p>
@@ -169,14 +169,12 @@
 
                 <button class="btn" type="button" onclick="next('.container-questions');">Weiter</button>
         </div>
-        <div class="container container-questions" style="display: none;">
+        <div class="container container-questions" style="">
                 <h1>Bitte teilen sie uns noch die folgende Informationen mit:</h1>
                 <label>Versicherungsnummer</label>
                 <input type="text" name="policeNr">
-                <label>Name</label>
-                <input type="text" name="lastname">
-                <label>Vorname</label>
-                <input type="text" name="firstname">
+                <label>Name Vorname</label>
+                <input type="text" name="name">
                 <label>Adresse</label>
                 <input type="text" name="address">
                 <label>Wie gross ist die Schadenssumme?</label>
