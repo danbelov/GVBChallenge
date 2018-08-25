@@ -67,13 +67,8 @@
         </div>
         <div class="container container-second" style="display:none;">
 
-<<<<<<< HEAD
-                <label>Was ist passiert?</label>
-                <textarea>
-=======
                 <h1>Was ist passiert?</h1>
                 <p>Beschreiben Sie möglichst detailiert was passiert ist</p>
->>>>>>> 212922bca9ee69e78728c2cc3af3484f678f343d
 
                 <textarea class="form-control" rows="10" id="damageDescription"></textarea>
                 <button class="btn btn-default" type="button" onclick="next('.container-third');">Weiter</button>
