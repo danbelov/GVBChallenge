@@ -11,6 +11,8 @@ import io.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class DamageReport extends Model {
 
@@ -18,31 +20,32 @@ public class DamageReport extends Model {
     @Constraints.Min(10)
     public Long id;
 
-    @Enumerated(EnumType.STRING)
-    public ReportStatus status;
+    //@Enumerated(EnumType.STRING)
+    //public ReportStatus status;
+    public String status;
 
-    public double fraudScore;
+    public Double fraudScore;
     public String policeNr;
     public String name;
     public String email;
 
-    public DateTime damageDate;
+    public Long damageDate;
 
     public String damageSource;
     public String damagedItems;
     public String damageDescription;
     public String otherInformations;
 
-    public boolean offerExists;
-    public double costs;
-    public boolean selfEstimated;
-    public boolean billExists;
+    public Boolean offerExists;
+    public Double costs;
+    public Boolean selfEstimated;
+    public Boolean billExists;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "damageReport") @JsonBackReference
     public List<DBImage> images;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    public List<Event> events;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "damageReport") @JsonBackReference
+    public List<Event> events = new ArrayList<>();
 
-    public static final Finder<Long, Model> find = new Finder<>(Model.class);
+    public static final Finder<Long, DamageReport> find = new Finder<>(DamageReport.class);
 }

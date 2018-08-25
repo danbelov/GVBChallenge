@@ -18,7 +18,10 @@ public class Event extends Model {
     @Constraints.Min(10)
     public Long id;
 
-    public DateTime time;
+    @ManyToOne
+    public DamageReport damageReport;
+
+    public Long time;
 
     @Enumerated(EnumType.STRING)
     public EventType type;

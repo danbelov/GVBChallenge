@@ -14,7 +14,11 @@ public class DBImage extends Model {
     @Constraints.Min(10)
     public Long id;
 
+    @ManyToOne
+    public DamageReport damageReport;
+
     public String description;
+    public String mime;
     @Lob
     public byte[] image;
 
