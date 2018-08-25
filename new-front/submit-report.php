@@ -158,7 +158,7 @@
                 <textarea class="form-control" rows="10" id="damageDescription"></textarea>
                 <button class="btn btn-default" type="button" onclick="next('.container-third');">Weiter</button>
         </div>
-        <div class="container container-third">
+        <div class="container container-third style="display: none;"">
 
                 <h1>Fotos?</h1>
                 <p>Wenn Sie ein Foto von dem schaden haben laden Sie dieses bitte hoch</p>
@@ -169,30 +169,19 @@
 
                 <button class="btn" type="button" onclick="next('.container-questions');">Weiter</button>
         </div>
-        <div class="container container-upload form-group">
-                <label>Bitte laden Sie das Foto auf den Server</label>
-                <div class="btn-group" role="group" aria-label="Fotoupload">
-                    <button class="btn btn-warning" type="button" onclick="next('.container-third');">Zurück</button>
-                    <button class="btn btn-success" type="button" onclick="next('.container-questions');">Ja</button>
-                    <button class="btn btn-danger" type="button" onclick="next('.container-questions');">Nein</button>
-                    <button class="btn btn-primary" type="button" onclick="next('.container-questions');">Weiter</button>
-                </div>
-
-        </div>
-        <div class="container container-questions">
-            
-        <div class="form-group row">
-            <h1>Bitte teilen sie uns noch die folgende Informationen mit:</h1>
-            <label>Versicherungsnummer</label>
-            <input type="text" name="policeNr">
-            <label>Name</label>
-            <input type="text" name="lastname">
-            <label>Vorname</label>
-            <input type="text" name="firstname">
-            <label>Adresse</label>
-            <input type="text" name="address">
-            <input type="submit" value="Definitiv einreichen">
-        <div>
+        <div class="container container-questions" style="display: none;">
+                <h1>Bitte teilen sie uns noch die folgende Informationen mit:</h1>
+                <label>Versicherungsnummer</label>
+                <input type="text" name="policeNr">
+                <label>Name</label>
+                <input type="text" name="lastname">
+                <label>Vorname</label>
+                <input type="text" name="firstname">
+                <label>Adresse</label>
+                <input type="text" name="address">
+                <label>Wie gross ist die Schadenssumme?</label>
+                <input type="text" name="costs">
+                <input type="submit" value="Definitiv einreichen">
         </div>
     </div>
     </form>
