@@ -1,3 +1,6 @@
+<?php
+    $id = 12;
+?>
 <!doctype html>
 
 <html lang="en">
@@ -64,19 +67,27 @@
         </div>
         <div class="container container-second" style="display:none;">
 
+<<<<<<< HEAD
                 <label>Was ist passiert?</label>
                 <textarea>
+=======
+                <h1>Was ist passiert?</h1>
+                <p>Beschreiben Sie möglichst detailiert was passiert ist</p>
+>>>>>>> 212922bca9ee69e78728c2cc3af3484f678f343d
 
-                </textarea>
+                <textarea class="form-control" rows="10" id="damageDescription"></textarea>
                 <button class="btn btn-default" type="button" onclick="next('.container-third');">Weiter</button>
         </div>
-        <div class="container container-third" style="display: none;">
-                <label>Haben Sie ein Foto von der Schaden?</label>
-                <div class="button-group" role="group" aria-label="Schadenfoto">
-                    <button class="btn btn-warning" type="button" onclick="next('.container-third');">Zurück</button>
-                    <button class="btn btn-success" type="button" onclick="next('.container-upload');">Ja</button>
-                    <button class="btn btn-danger" type="button" onclick="next('.container-questions');">Nein</button>
-                </div>
+        <div class="container container-third">
+
+                <h1>Fotos?</h1>
+                <p>Wenn Sie ein Foto von dem schaden haben laden Sie dieses bitte hoch</p>
+
+                <iframe height="200" width="500" src="upload.php">
+                    
+                </iframe>
+
+                <button class="btn" type="button" onclick="next('.container-questions');">Weiter</button>
         </div>
         <div class="container container-upload form-group" style="display: none;">
                 <label>Bitte laden Sie das Foto auf den Server</label>
@@ -86,6 +97,7 @@
                     <button class="btn btn-danger" type="button" onclick="next('.container-questions');">Nein</button>
                     <button class="btn btn-primary" type="button" onclick="next('.container-questions');">Weiter</button>
                 </div>
+
         </div>
         <div class="container container-questions" style="display: none;">
             
