@@ -1,2 +1,0 @@
-;reload; set _root_.org.jetbrains.sbt.StructureKeys.sbtStructureOptions in Global := "download resolveClassifiers" ;*/*:dumpStructureTo C:/Users/RSQLAPTOP/AppData/Local/Temp/sbt-structure.xml; session clear-all
-all {file:/C:/Users/RSQLAPTOP/Documents/GVBChallenge/backend/}root/products {file:/C:/Users/RSQLAPTOP/Documents/GVBChallenge/backend/}root/test:products
