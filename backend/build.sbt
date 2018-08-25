@@ -14,3 +14,4 @@ libraryDependencies += filters
 libraryDependencies += "joda-time" % "joda-time" % "2.10"
 libraryDependencies += "com.fasterxml.jackson" % "jackson-base" % "2.9.6"
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-annotations" % "2.9.6"
+libraryDependencies += "javax.mail" % "mail" % "1.4.7"
