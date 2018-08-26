@@ -94,7 +94,7 @@
 
             $link="overview.php?id=" . $r->id;
             ?>
-            <tr data-url="<?php echo $link; ?>">
+            <tr data-url="<?php echo $link; ?>&admin=1">
               <!-- <a href="<?php echo $link; ?>"> -->
                 <td><?php echo $r->name;?></td>
                 <td><?php echo $r->status;?></td>
@@ -224,7 +224,7 @@
             foreach($mainReport->images as $img){?>
 
                 <div class="image">
-                    <img src="http://http://142.93.107.12:9000/Image/<?php echo $img->id;?>"/>
+                    <img src="http://142.93.107.12:9000/Image/<?php echo $img->id;?>"/>
                     <p><?php echo $img->description;?></p>
                 </div>
 
