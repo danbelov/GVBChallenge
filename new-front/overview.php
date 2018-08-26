@@ -94,7 +94,7 @@
 
             $link="overview.php?admin=true&id=" . $r->id;
             ?>
-            <tr data-url="<?php echo $link; ?>">
+            <tr data-url="<?php echo $link; ?>&admin=1">
               <!-- <a href="<?php echo $link; ?>"> -->
                 <td><?php echo $r->name;?></td>
                 <td><?php echo $r->status;?></td>
@@ -208,7 +208,7 @@
             <?php
             foreach($mainReport->events as $event){?>
 
-                <div <?php echo $event->type == "email" ?  "class='event border border-round blue-background'":"class='event border border-round'";  ?>>
+                <div <?php echo $event->type == "EMAIL" ?  "class='event border border-round blue-background'":"class='event border border-round'";  ?>>
                     <div class="row">
                         <p class="col-sm-2"><?php echo $event->time;?></p>
                         <p class="col-sm-10"><?php echo $event->text;?></p>
@@ -224,7 +224,7 @@
             foreach($mainReport->images as $img){?>
 
                 <div class="image">
-                    <img src="<?php echo $img->url;?>"/>
+                    <img src="http://142.93.107.12:9000/Image/<?php echo $img->id;?>"/>
                     <p><?php echo $img->description;?></p>
                 </div>
 
