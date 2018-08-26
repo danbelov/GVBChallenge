@@ -133,3 +133,8 @@ td.highlight {
 .form-group input{
     width: 300px;
 }
+
+.not-admin{
+    margin-left: auto !important;
+    margin-right: auto  !important;
+}
