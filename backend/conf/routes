@@ -13,6 +13,7 @@ POST    /ChangeStatus/:id           controllers.DamageReportController.changeSta
 PUT     /Image                      controllers.DamageReportController.createImage()
 GET     /Image/:id                  controllers.DamageReportController.getImage(id: Long)
 GET     /Image                      controllers.DamageReportController.getImages()
+GET     /Images/:id                 controllers.DamageReportController.getRepImages(id: Long)
 
 PUT     /Event                      controllers.DamageReportController.createEvent()
 GET     /Event/:id                  controllers.DamageReportController.getEvent(id: Long)

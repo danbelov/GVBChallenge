@@ -77,7 +77,7 @@ public class DamageReportController extends Controller {
             img.image = Files.readAllBytes(file.toPath());
         } catch (java.io.IOException e) {}
         img.description = form.get("description");
-        server.save(img);
+        //server.save(img);
 
         DamageReport rep = DamageReport.find.byId(Long.parseLong(form.get("report-id")));
         rep.images.add(img);
@@ -100,6 +100,11 @@ public class DamageReportController extends Controller {
         return ok(Json.toJson(models.DBImage.find.all()));
     }
 
+    public Result getRepImages(Long id) {
+        DamageReport rep = DamageReport.find.byId(id);
+        return ok(Json.toJson(DBImage.find.query().where().eq("damageReport", rep).findList()));
+    }
+
     public Result createEvent() {
         EbeanServer server = Ebean.getDefaultServer();
         DynamicForm form = formFactory.form().bindFromRequest();
@@ -108,7 +113,7 @@ public class DamageReportController extends Controller {
         event.time = new DateTime().getMillis();
         event.type = EventType.valueOf(form.get("type"));
         event.text = form.get("text");
-        server.save(event);
+        //server.save(event);
 
         DamageReport rep = DamageReport.find.byId(Long.parseLong(form.get("report-id")));
         rep.events.add(event);
