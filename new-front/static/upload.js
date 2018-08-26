@@ -31,17 +31,37 @@ dropArea.addEventListener('drop', handleDrop, false);
 
 function handleDrop(e) {
   let dt = e.dataTransfer;
-  let file = dt.file;
+  let files = dt.files;
 
-  uploadFile(file);
+  handleFile(files);
 }
 
 });
 
-function uploadFile(file) {
-  console.log("Uploading...");
-  let url = 'http://142.93.107.12:9000/Image';
-  let formData = new FormData();
+function previewFile(files) {
+  let reader = new FileReader();
+  reader.readAsDataURL(files[0]);
+  reader.onloadend = function() {
+    let img = document.createElement('img');
+    img.src = reader.result;
+    document.getElementById('gallery').appendChild(img);
+  }
+}
+
+
+function handleFile(files) {
+  previewFile(files);
+  uploadFile(files[0]);
+}
+
+
+function uploadFile(file, i) { // <- Add `i` parameter
+  var url = 'http://142.93.107.12:9000/Image';
+  var xhr = new XMLHttpRequest();
+  var formData = new FormData();
+  xhr.open('PUT', url, true);
+  //xhr.setRequestHeader('Content-type','application/multipart; charset=utf-8');
+
   let id = document.getElementById('report-id');
   let desc = document.getElementById('img_description');
 
@@ -49,10 +69,5 @@ function uploadFile(file) {
   formData.append('report-id', id.value);
   formData.append('description',desc.value);
 
-  result = fetch(url, {
-        method: 'PUT',
-        body: formData
-      })
-  .then(() => { console.log(result)})
-  .catch(() => { console.log(result)});
+  xhr.send(formData);
 }
