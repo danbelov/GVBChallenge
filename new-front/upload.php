@@ -1,8 +1,10 @@
-<html>
-<body>
-                    <form method="post" action="upload?reportId=<?php echo $id?>" enctype="multipart/form-data">
-                    File name:<input type="file" name="imgfile"><br>
-                    <input type="submit" name="submit" value="upload">
-                    </form>
-</body>
-</html>
+<div id="drop-area">
+    <form class="my-form">
+      <div class="form-group">
+      <input type="text" class="form-control" id="img_description" placeholder="Beschreibung" >
+      </div>
+      <input type="file" id="fileElem" multiple accept="image/*" onchange="uploadFile(this.file)">
+      <label class="button" for="fileElem">Select a file</label>
+      <input id="report-id" value="<?php $id ?>">
+    </form>
+</div>
