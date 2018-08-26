@@ -16,6 +16,7 @@ public class GVBServerConfigStartup implements ServerConfigStartup {
     public void onStart(ServerConfig serverConfig) {
         serverConfig.setDatabaseSequenceBatchSize(1);
         serverConfig.setJsonDateTime(JsonConfig.DateTime.ISO8601);
+        serverConfig.setUpdateChangesOnly(false);
 
         /*DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setUrl("jdbc:h2:mem:play");

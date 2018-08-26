@@ -28,7 +28,7 @@ public class ClassifierThread {
             //Scanner s = new Scanner(process.getInputStream());
             //String str = s.nextLine();
             return Double.parseDouble(str);
-        } catch (IOException e) {e.printStackTrace();}
+        } catch (Exception e) {/*e.printStackTrace();*/}
         return 0.0;
     }
 

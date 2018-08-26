@@ -22,7 +22,15 @@ public class DBImage extends Model {
     public String description;
     public String mime;
     @Lob
-    public byte[] image;
+    private byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public static final Finder<Long, DBImage> find = new Finder<>(DBImage.class);
 }

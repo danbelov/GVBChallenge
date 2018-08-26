@@ -52,11 +52,6 @@ public class DamageReportController extends Controller {
 
         EbeanServer server = Ebean.getDefaultServer();
 
-        Event event = new Event();
-        event.type = EventType.EMAIL;
-        event.time = new DateTime().getMillis();
-        event.text = "Testtext";
-
         DamageReport report = new DamageReport();
         report.fraudScore = 1.57;
         report.policeNr = "1113984-3994824";
@@ -70,9 +65,16 @@ public class DamageReportController extends Controller {
         report.selfEstimated = true;
         report.billExists = false;
         report.damageDate = new DateTime().getMillis();
-        System.out.println("Event: " + event);
-        report.events.add(event);
         server.save(report);
+
+        DamageReport rep = DamageReport.find.byId(report.id);
+        Event event = new Event();
+        event.type = EventType.EMAIL;
+        event.time = new DateTime().getMillis();
+        event.text = "Testtext";
+        rep.events.add(event);
+        server.save(rep);
+
         return ok();
     }
 
@@ -86,8 +88,9 @@ public class DamageReportController extends Controller {
         }
         DamageReport rep = DamageReport.find.byId(id);
         rep.status = form.get("status");
-        server.save(rep);
-        System.out.println("Status changed to " + form.get("status"));
+        Ebean.markAsDirty(rep);
+        server.update(rep);
+        System.out.println("Status changed to " + form.get("status") + ", is now " + rep.status);
         return ok();
     }
 
@@ -103,13 +106,13 @@ public class DamageReportController extends Controller {
         DBImage img = new DBImage();
         img.mime = contentType;
         try {
-            img.image = Files.readAllBytes(file.toPath());
+            img.setImage(Files.readAllBytes(file.toPath()));
         } catch (java.io.IOException e) {}
         img.description = form.get("description");
 
         DamageReport rep = DamageReport.find.byId(Long.parseLong(form.get("report-id")));
         rep.images.add(img);
-        server.save(rep);
+        server.update(rep);
 
         System.out.println("Added image " + img.id + " to report " + rep.id);
         return ok("" + img.id);
@@ -121,7 +124,7 @@ public class DamageReportController extends Controller {
         response().setContentType(img.mime);
         response().setHeader("X-Image-Description", img.description);
         response().setHeader("Content-Disposition", "attachment; filename=" + id);
-        return ok(img.image);
+        return ok(img.getImage());
     }
 
     public Result getImages() {
@@ -213,21 +216,21 @@ public class DamageReportController extends Controller {
         DynamicForm form = formFactory.form().bindFromRequest();
         DamageReport rep = DamageReport.find.byId(Long.parseLong(form.get("id")));
         rep.status = form.get("status");
-        rep.fraudScore = Double.parseDouble(form.get("fraudScore"));
+        rep.fraudScore = (form.get("fraudScore") != null && form.get("fraudScore").length() > 0) ? Double.parseDouble(form.get("fraudScore")) : 0;
         rep.policeNr = form.get("policeNr");
         rep.name = form.get("name");
         rep.email = form.get("email");
-        rep.damageDate = Long.parseLong(form.get("damageDate"));
-        rep.damageSource = form.get("damageSource");
+        rep.damageDate = (form.get("damageDate") != null && form.get("damageDate").length() > 0) ? Long.parseLong(form.get("damageDate")) : new DateTime().getMillis();
+        rep.damageSource = (form.get("damageSource") != null ? form.get("damageSource") : "");
         rep.damagedItems = form.get("damagedItems");
         rep.damageDescription = form.get("damageDescription");
         rep.otherInformations = form.get("otherInformations");
-        rep.offerExists = Boolean.parseBoolean(form.get("offerExists"));
-        rep.costs = Double.parseDouble(form.get("costs"));
-        rep.selfEstimated = Boolean.parseBoolean(form.get("selfEstimated"));
-        rep.billExists = Boolean.parseBoolean(form.get("billExists"));
-
-        server.save(rep);
+        rep.offerExists = (form.get("offerExists") != null && form.get("offerExists").length() > 0) ? Boolean.parseBoolean(form.get("offerExists")) : false;
+        rep.costs = (form.get("costs") != null && form.get("costs").length() > 0) ? Double.parseDouble(form.get("costs")) : 0;
+        rep.selfEstimated = (form.get("selfEstimated") != null && form.get("selfEstimated").length() > 0) ? Boolean.parseBoolean(form.get("selfEstimated")) : false;
+        rep.billExists = (form.get("billExists") != null && form.get("billExists").length() > 0) ? Boolean.parseBoolean(form.get("billExists")) : false;
+        Ebean.markAsDirty(rep);
+        server.update(rep);
 
         MailSender mailSender = new MailSender();
 

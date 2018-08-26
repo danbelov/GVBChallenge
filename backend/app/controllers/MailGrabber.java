@@ -47,17 +47,19 @@ public class MailGrabber extends Controller {
         } else {
             EbeanServer server = Ebean.getDefaultServer();
 
-            Event event = new Event();
-            event.type = EventType.EMAIL;
-            event.time = new DateTime().getMillis();
-            event.text = form.get("msg");
-
             DamageReport report = new DamageReport();
             report.status = "Waiting for customer";
             report.email = form.get("sender");
             report.damageDate = new DateTime().getMillis();
-            report.events.add(event);
             server.save(report);
+
+            DamageReport rep = DamageReport.find.byId(report.id);
+            Event event = new Event();
+            event.type = EventType.EMAIL;
+            event.time = new DateTime().getMillis();
+            event.text = form.get("msg");
+            rep.events.add(event);
+            server.save(rep);
 
             MailSender mailSender = new MailSender();
 
@@ -68,11 +70,11 @@ public class MailGrabber extends Controller {
                             +" Diese können Sie unter dem " +
                             "folgenden Link finden: " + ServerAddress
                                                       + PHPIntermediaryPage
-                                                      + "?id=" + report.id
-                                                      + "&email=" + report.email);
+                                                      + "?id=" + rep.id
+                                                      + "&email=" + rep.email);
 
-            System.out.println("E-Mail from " + report.email + " received, id: " + report.id + ", msg: " + report.events.get(0).text);
-            return ok("E-Mail from " + report.email + " received, id: " + report.id + ", msg: " + report.events.get(0).text);
+            System.out.println("E-Mail from " + rep.email + " received, id: " + rep.id + ", msg: " + rep.events.get(0).text);
+            return ok("E-Mail from " + rep.email + " received, id: " + rep.id + ", msg: " + rep.events.get(0).text);
         }
     }
 
