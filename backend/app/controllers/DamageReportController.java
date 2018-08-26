@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import java.io.File;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import mail.MailSender;
 import play.mvc.*;
@@ -25,7 +26,6 @@ import org.joda.time.*;
 import models.*;
 import enums.*;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import subprocesses.ClassifierThread;
@@ -42,9 +42,38 @@ public class DamageReportController extends Controller {
 
     private static final String PHPIntermediaryPage = "overview.php";
 
+
     @Inject
     public DamageReportController(FormFactory formFactory) {
         this.formFactory = formFactory;
+    }
+
+    public Result initializeReports() {
+
+        EbeanServer server = Ebean.getDefaultServer();
+
+        Event event = new Event();
+        event.type = EventType.EMAIL;
+        event.time = new DateTime().getMillis();
+        event.text = "Testtext";
+
+        DamageReport report = new DamageReport();
+        report.fraudScore = 1.57;
+        report.policeNr = "1113984-3994824";
+        report.name = "Schadenmeldung 0012";
+        report.damageSource = "Vandalismus";
+        report.damagedItems = "Fenster";
+        report.status = "Waiting for customer";
+        report.email = "someone@dachschaden.ch";
+        report.offerExists = true;
+        report.costs = 2779.95;
+        report.selfEstimated = true;
+        report.billExists = false;
+        report.damageDate = new DateTime().getMillis();
+        System.out.println("Event: " + event);
+        report.events.add(event);
+        server.save(report);
+        return ok();
     }
 
     public Result changeStatus(Long id) {

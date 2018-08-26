@@ -23,4 +23,6 @@ POST    /DamageReport               controllers.DamageReportController.updateDam
 GET     /DamageReport/:id           controllers.DamageReportController.getDamageReport(id: Long)
 GET     /DamageReport               controllers.DamageReportController.getDamageReports()
 
-POST    /email                       controllers.MailGrabber.newMail()
+POST    /email                      controllers.MailGrabber.newMail()
+
+GET     /Initialize                 controllers.DamageReportController.initializeReports()
