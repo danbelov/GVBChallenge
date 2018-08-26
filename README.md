@@ -4,5 +4,6 @@ Die Gebäuderversicherung erhält nach einen starken Sturm sehr viele Emails mit
 
 Demo:
 Stell dir vor du hast ein Dachschaden und sende ein Mail desswegen an gvbschaden@gmail.com. Folge den Anweisungen.
+Wenn es mit dem Mail nicht klappt nutze diesen Link: http://142.93.107.12/submit-report.php?id=2&email=gianlucafrei@gmail.com
 
 Hier findest du die 'Admin' Oberfläche: http://142.93.107.12/overview.php?id=1
