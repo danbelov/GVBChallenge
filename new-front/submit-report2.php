@@ -1,6 +1,7 @@
 <?php
     $id = $_GET["id"];
     $email= $_GET["email"];
+    echo "<!-- $email -->";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -42,10 +43,11 @@
         "billExists": true}
         */
 
+
+        var_dump($jsonString);
+
         $curl = curl_init();
 
-        echo "curl_setopt_array";
-        curl_setopt($handle, CURLOPT_VERBOSE, true);
         curl_setopt_array($curl, array(
         CURLOPT_URL => "http://142.93.107.12:9000/DamageReport",
         CURLOPT_RETURNTRANSFER => true,
@@ -61,8 +63,6 @@
         ));
 
         $response = curl_exec($curl);
-
-
         $err = curl_error($curl);
 
         curl_close($curl);
@@ -70,13 +70,11 @@
         if ($err) {
         echo "cURL Error #:" . $err;
         } else {
-            $location = "/overview.php?id=".$response;
-            header("Location: http://142.93.107.12$location"); /* Redirect browser */
-            exit();
-            echo $response;
-            echo $location;
-            exit();
+        echo $response;
         }
+
+        $location = "/overview.php?id=".$response;
+        echo $location;
         exit();
     }
 ?>
@@ -102,7 +100,7 @@
 
 </head>
 <body>
-    <form method="post" id="theoneandonlyform" action="/submit-report.php/?email=<?php echo $email ?>&id=<?php echo $id ?>">
+    <form method="post" id="theoneandonlyform" action="/submit-report.php/?email=<?php echo $email ?>">
 
     <input type="hidden" name="damageDate" value="" />
     <input type="hidden" name="damagedItems" value="" />
@@ -148,7 +146,7 @@
                     <p>Es geht um etwas anderes:</p>
                     <input type="hidden" name="damage_reason" id="damageReason" class="form-control" value="" placeholder="Schadensgrund" onkeypress="$('#input-damageSource').val($(this).val());"/>
                 </div>
-
+                
                 <input type="text" name="damageSource" id="input-damageSource" value="" />
                 <button class="btn" type="button" onclick="next('.container-second');">Weiter</button>
         </div>
@@ -165,9 +163,9 @@
                 <h1>Fotos?</h1>
                 <p>Wenn Sie ein Foto von dem schaden haben laden Sie dieses bitte hoch</p>
 
-                <iframe height="500" width="500" src="https://imgur.com/upload"></iframe>
-
-                <?php include 'upload.php'; ?>
+                <iframe height="200" width="500" src="upload.php">
+                    
+                </iframe>
 
                 <button class="btn" type="button" onclick="next('.container-damageSum');">Weiter</button>
         </div>
