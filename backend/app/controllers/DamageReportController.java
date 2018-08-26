@@ -77,7 +77,6 @@ public class DamageReportController extends Controller {
             img.image = Files.readAllBytes(file.toPath());
         } catch (java.io.IOException e) {}
         img.description = form.get("description");
-        //server.save(img);
 
         DamageReport rep = DamageReport.find.byId(Long.parseLong(form.get("report-id")));
         rep.images.add(img);
@@ -113,7 +112,6 @@ public class DamageReportController extends Controller {
         event.time = new DateTime().getMillis();
         event.type = EventType.valueOf(form.get("type"));
         event.text = form.get("text");
-        //server.save(event);
 
         DamageReport rep = DamageReport.find.byId(Long.parseLong(form.get("report-id")));
         rep.events.add(event);
@@ -210,8 +208,8 @@ public class DamageReportController extends Controller {
                                 "der Status von Ihrer Anfrage " +
                                 "hat sich in der Zwischenzeit verändert."
                                 +" Diese können Sie jedes mal " +
-                                "online unter dem " +
-                                "folgenden Link verfolgen: " + ServerAddress
+                                "online unter " +
+                                "folgendem Link verfolgen: " + ServerAddress
                                 + PHPIntermediaryPage
                                 + "?id=" + rep.id
                                 + "&email=" + rep.email);

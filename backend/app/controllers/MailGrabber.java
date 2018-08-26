@@ -64,7 +64,7 @@ public class MailGrabber extends Controller {
             mailSender.sendMail(report.email,
                     "Ihre Anfrage bei der GVB",
                     "Sehr geehrte Damen und Herren, " +
-                            "bitte verfolständigen Sie Ihre Anfrage"
+                            "bitte vervollständigen Sie Ihre Anfrage."
                             +" Diese können Sie unter dem " +
                             "folgenden Link finden: " + ServerAddress
                                                       + PHPIntermediaryPage
