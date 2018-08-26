@@ -5,6 +5,7 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $obj = new stdClass();
+        $obj->id = $id;
         $obj->status = "Waiting for support";
         $obj->policeNr = $_POST["policeNr"];
         $obj->name = $_POST["name"];
@@ -44,8 +45,8 @@
 
         $curl = curl_init();
 
-        echo "curl_setopt_array";
-        curl_setopt($handle, CURLOPT_VERBOSE, true);
+        #echo "curl_setopt_array";
+        #curl_setopt($handle, CURLOPT_VERBOSE, true);
         curl_setopt_array($curl, array(
         CURLOPT_URL => "http://142.93.107.12:9000/DamageReport",
         CURLOPT_RETURNTRANSFER => true,
@@ -53,7 +54,7 @@
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "PUT",
+        CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_POSTFIELDS => $jsonString,
         CURLOPT_HTTPHEADER => array(
             "Content-Type: application/json"
@@ -70,7 +71,10 @@
         if ($err) {
         echo "cURL Error #:" . $err;
         } else {
-            $location = "/overview.php?id=".$response;
+            #echo $response;
+            #echo "json: " . $jsonString . "\n";
+            $location = "/overview.php?id=".$id;
+            #echo "go to: " . $location;
             header("Location: http://142.93.107.12$location"); /* Redirect browser */
             exit();
             echo $response;
