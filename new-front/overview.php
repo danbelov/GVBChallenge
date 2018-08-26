@@ -92,7 +92,7 @@
         <tbody>
           <?php foreach($reports as $r){
 
-            $link="overview.php?id=" . $r->id;
+            $link="overview.php?admin=true&id=" . $r->id;
             ?>
             <tr data-url="<?php echo $link; ?>&admin=1">
               <!-- <a href="<?php echo $link; ?>"> -->
@@ -106,7 +106,7 @@
     </aside><?php } ?>
 
 
-    <main class="report-container col-sm-8">
+    <main class="report-container col-sm-8 <?php if(! $_GET["admin"]) echo "not-admin" ?>">
 
             <?php if($mainReport){ ?>
 
